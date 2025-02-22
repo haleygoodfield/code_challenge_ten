@@ -87,8 +87,8 @@ class Inventory {
     
 
     // Task 5: : Implementing Product Restocking
-    restockProduct(produtId, quantity) { // Add a method restockProduct(productId, quantity) in the Inventory class
-        let product = this.products.find(product => product,id === productID);
+    restockProduct(productId, quantity) { // Add a method restockProduct(productId, quantity) in the Inventory class
+        let product = this.products.find(product => product.id === productId);
         if (product) {
             product.stock += quantity; // The method increases the stock of the product.
         }
