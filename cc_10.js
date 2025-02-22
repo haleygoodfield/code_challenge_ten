@@ -37,12 +37,12 @@ class Order {
     this.product = product; // (instance of Product)
     this.quantity = quantity; // quantity (number)
     this.product.updateStock(this.quantity);
-    }
+    };
 
-    get orderDetails() { // Add a method getOrderDetails() that returns order details
+    getOrderDetails() { // Add a method getOrderDetails() that returns order details
         return `Order ID: ${this.orderId}, Product: ${this.product.name}, Quantity: ${this.quantity}, Total Price: $${this.product.price * this.quantity}`;
     }
-};
+}
     
 // Test Cases:
 const order1 = new Order(501, prod1, 2);
