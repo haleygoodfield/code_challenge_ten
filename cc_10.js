@@ -14,14 +14,10 @@ class Product {
 
     // Add a method updateStock(quantity) that modifies the stock level when an order is placed
     updateStock(quantity) {
-        if (quantity > 0 && quantity <= this.stock) {
-            this.stock -= quantity;
-        } else {
-            console.log("Not enough stock");
-            return false;
+        this.stock -= quantity;
         }
-    }
- }
+    
+ };
 // Test Cases
 const prod1 = new Product("Laptop", 101, 1200, 10);
 console.log(prod1.getDetails()); 
@@ -40,19 +36,14 @@ class Order {
     this.orderId = orderId; // (number)
     this.product = product; // (instance of Product)
     this.quantity = quantity; // quantity (number)
-    
+    this.product.updateStock(this.quantity);
+    }
 
-    // Ensure stock is reduced when an order is created
-    if (!this.product.updateStock(this.quantity)) {
-        console.log(`Stock is Reduced when Order: ${this.orderId} is created`);
+    get orderDetails() { // Add a method getOrderDetails() that returns order details
+        return `Order ID: ${this.orderId}, Product: ${this.product.name}, Quantity: ${this.quantity}, Total Price: $${this.product.price * this.quantity}`;
     }
-}
-    // Add a method getOrderDetails() that returns order details
-    getOrderDetails() {
-        const totalPrice = this.product.price * this.quantity;
-        return `Order ID: ${this.orderId}, Product: ${this.product.name}, Quantity: ${this.quantity}, Total Price: $${totalPrice}`;
-    }
-}
+};
+    
 // Test Cases:
 const order1 = new Order(501, prod1, 2);
 console.log(order1.getOrderDetails()); 
@@ -80,20 +71,29 @@ class Inventory {
     }
 
 
-// Task 4: Implementing Order Management
-placeOrder(orderId, product, quantity) { // add method: placeOrder(orderId, product, quantity) 
-   if (product.stock >= quantity) { // // Creates a new order and adds it to orders if stock is available
-    const order = new Order(orderId, product, quantity);
-    this.orders.push(order); 
+    // Task 4: Implementing Order Management
+    placeOrder(orderId, product, quantity) { // add method: placeOrder(orderId, product, quantity) 
+    if (product.stock >= quantity) { 
+        let order = new Order(orderId, product, quantity); // Creates a new order 
+        this.orders.push(order); // Adds it to orders if stock is available
    } else {
-    console.log(`Not enough stock for ${product.name}`); // Output if there is not enough stock 
+        return `Not enough stock for ${product.name}`; // Output if there is not enough stock 
    }
 } 
     listOrders() { // Logs all placed orders.
         this.orders.forEach(order => console.log(order.getOrderDetails()));
     }
 
-}
+    
+
+    // Task 5: : Implementing Product Restocking
+    restockProduct(produtId, quantity) { // Add a method restockProduct(productId, quantity) in the Inventory class
+        let product = this.products.find(product => product,id === productID);
+        if (product) {
+            product.stock += quantity; // The method increases the stock of the product.
+        }
+    }
+};
 
 // Test Cases: Task 3
 const inventory = new Inventory();
@@ -110,3 +110,7 @@ console.log(prod1.getDetails());
 // Expected output: "Product: Laptop, ID: 101, Price: $1200, Stock: 3"
 
 
+// Test Cases: Task 5
+inventory.restockProduct(101, 5);
+console.log(prod1.getDetails()); 
+// Expected output: "Product: Laptop, ID: 101, Price: $1200, Stock: 8"
